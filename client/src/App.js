@@ -1,10 +1,10 @@
 import "./App.css";
-import { subscribeUser } from "./subscription";
+import { subscribeUser, sendNotification } from "./subscription";
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <button onClick={subscribeUser}>Click Here</button>
+        <button onClick={sendNotification}>Click Here</button>
       </header>
     </div>
   );

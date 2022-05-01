@@ -1,6 +1,5 @@
-const convertedVapidKey = urlBase64ToUint8Array(
-  "BEhgturqO11Ge40M6tPx0Ql8yYH7VGelqRdYzBc7sna41TM1s1jfayRmItV3_Ekl5lZBsTMNxxcGOq_tswBtb_4"
-);
+// NOTE: Please don't use this key. Create a new one and use it.
+const convertedVapidKey = urlBase64ToUint8Array("PUBLIC_VAPID_KEYS");
 
 function urlBase64ToUint8Array(base64String) {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
@@ -23,15 +22,29 @@ function sendSubscription(subscription) {
     method: "POST",
     body: JSON.stringify({
       subscription: subscription,
-      title: "Notified by whatido",
-      description: "meet the real experts",
-      icon: "https://ichef.bbci.co.uk/news/976/cpsprodpb/9A50/production/_118740593_gettyimages-1231144196.jpg",
+      userId: "11155",
     }),
     headers: {
       "Content-Type": "application/json",
     },
   });
 }
+
+export function sendNotification() {
+  return fetch(`/notifications/notify`, {
+    method: "POST",
+    body: JSON.stringify({
+      title: "Notified by keccak.eth",
+      description: "meet the real experts",
+      icon: "https://ichef.bbci.co.uk/news/976/cpsprodpb/9A50/production/_118740593_gettyimages-1231144196.jpg",
+      userId: "11155",
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
 //conditional render
 let clicked = true;
 
@@ -70,7 +83,10 @@ export function subscribeUser() {
                     }
                   });
               } else {
-                console.log("Existed subscription detected.");
+                console.log(
+                  "Existed subscription detected.",
+                  existedSubscription
+                );
                 sendSubscription(existedSubscription);
               }
             });

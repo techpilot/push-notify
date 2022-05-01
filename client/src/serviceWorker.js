@@ -56,6 +56,12 @@ export function register(config) {
       }
     });
   }
+
+  if (Notification.permission === "granted") {
+    navigator.serviceWorker.ready.then((registration) => {
+      registration.showNotification("Hello, welcome!");
+    });
+  }
 }
 
 function registerValidSW(swUrl, config) {
