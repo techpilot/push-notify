@@ -30,9 +30,9 @@ mongoose
 // npm install -g web-push(global) or npm install web-push(local)
 // web-push generate-vapid-keys(global) or ./node_modules/.bin/web-push generate-vapid-keys(local)
 webpush.setVapidDetails(
-  "mailto: `stephenngwu30@gmail.com`",
-  "PUBLIC_VAPID_KEYS",
-  "PRIVATE_VAPID_KEYS"
+  "mailto: `your email address`",
+  "PUBLIC_VAPID_KEY",
+  "PRIVATE_VAPID_KEY"
 );
 
 app.get("/", (req, res) => {

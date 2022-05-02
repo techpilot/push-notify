@@ -1,5 +1,5 @@
 // NOTE: Please don't use this key. Create a new one and use it.
-const convertedVapidKey = urlBase64ToUint8Array("PUBLIC_VAPID_KEYS");
+const convertedVapidKey = urlBase64ToUint8Array("PUBLIC_VAPID_KEY");
 
 function urlBase64ToUint8Array(base64String) {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
@@ -30,7 +30,8 @@ function sendSubscription(subscription) {
   });
 }
 
-export function sendNotification() {
+export function sendNotification(value) {
+  console.log(value);
   return fetch(`/notifications/notify`, {
     method: "POST",
     body: JSON.stringify({

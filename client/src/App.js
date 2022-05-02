@@ -1,10 +1,17 @@
+import React, { useState } from "react";
 import "./App.css";
-import { subscribeUser, sendNotification } from "./subscription";
+import { sendNotification } from "./subscription";
 function App() {
+  const [valueState, setValueState] = useState("This is the initial value");
+
+  const send = () => {
+    sendNotification(valueState);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <button onClick={sendNotification}>Click Here</button>
+        <button onClick={send}>Click Here</button>
       </header>
     </div>
   );
