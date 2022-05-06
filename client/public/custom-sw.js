@@ -37,3 +37,27 @@ self.addEventListener(
   },
   false
 );
+
+// self.addEventListener(
+//   "notificationclick",
+//   function (event) {
+//     if (!event.action) {
+//       // Was a normal notification click
+//       clients.openWindow("/");
+//       return;
+//     }
+
+//     switch (event.action) {
+//       case "view-message":
+//         clients.openWindow("/messages/ongoing");
+//         break;
+//       case "view-comment":
+//         clients.openWindow("/profile");
+//         break;
+//       default:
+//         clients.openWindow("/");
+//         break;
+//     }
+//   },
+//   false
+// );
