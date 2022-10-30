@@ -1,5 +1,7 @@
 // NOTE: Please don't use this key. Create a new one and use it.
-const convertedVapidKey = urlBase64ToUint8Array("PUBLIC_VAPID_KEY");
+const convertedVapidKey = urlBase64ToUint8Array(
+  "BEhgturqO11Ge40M6tPx0Ql8yYH7VGelqRdYzBc7sna41TM1s1jfayRmItV3_Ekl5lZBsTMNxxcGOq_tswBtb_4"
+);
 
 function urlBase64ToUint8Array(base64String) {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);

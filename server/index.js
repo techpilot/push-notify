@@ -31,9 +31,9 @@ mongoose
 // npm install -g web-push(global) or npm install web-push(local)
 // web-push generate-vapid-keys(global) or ./node_modules/.bin/web-push generate-vapid-keys(local)
 webpush.setVapidDetails(
-  "mailto: `EMAIL`",
-  "PUBLIC_VAPID_KEY",
-  "PRIVATE_VAPID_KEY"
+  "mailto: `stephenngwu30@gmail.com`",
+  "BEhgturqO11Ge40M6tPx0Ql8yYH7VGelqRdYzBc7sna41TM1s1jfayRmItV3_Ekl5lZBsTMNxxcGOq_tswBtb_4",
+  "nKSi9ijp0Yl1JzuWSpv-f0o6nqUD9YAn-HZ5Wz9HEdE"
 );
 
 app.get("/", (req, res) => {
@@ -72,37 +72,47 @@ app.post("/notifications/subscribe", async (req, res) => {
 
   const { data } = await getEndpoints(subscription.endpoint);
 
-  if (data.length > 0) {
-    data.map(async ({ userSlug, _id }) => {
-      try {
-        if (userSlug === req.body.userSlug) {
-          console.log("USER ALREADY SUBSCRIBED");
-        } else {
-          await EndpointModel.updateOne(
-            { _id: _id },
-            { $set: { userSlug: req.body.userSlug } }
-          );
-          console.log("USER UPDATED");
+  if (req.body.userSlug) {
+    if (data.length > 0) {
+      data.map(async ({ userSlug, _id }) => {
+        try {
+          if (userSlug === req.body.userSlug) {
+            console.log("USER ALREADY SUBSCRIBED");
+          } else {
+            await EndpointModel.updateOne(
+              { _id: _id },
+              { $set: { userSlug: req.body.userSlug } }
+            );
+            console.log("USER UPDATED");
+          }
+        } catch (error) {
+          console.log("error", error);
         }
+      });
+    } else {
+      // if no endpoints found
+      const newEndpoint = new EndpointModel({
+        endpoint: subscription.endpoint,
+        subscription,
+        userSlug: req.body.userSlug,
+      });
+
+      try {
+        await newEndpoint.save();
+        console.log("newEndpoint", newEndpoint);
+        res.status(201).json(newEndpoint);
+      } catch (error) {
+        res.status(409).json({ message: error.message });
+      }
+    }
+  } else {
+    data.map(async ({ _id }) => {
+      try {
+        await EndpointModel.findByIdAndDelete({ _id: _id });
       } catch (error) {
         console.log("error", error);
       }
     });
-  } else {
-    // if no endpoints found
-    const newEndpoint = new EndpointModel({
-      endpoint: subscription.endpoint,
-      subscription,
-      userSlug: req.body.userSlug,
-    });
-
-    try {
-      await newEndpoint.save();
-      console.log("newEndpoint", newEndpoint);
-      res.status(201).json(newEndpoint);
-    } catch (error) {
-      res.status(409).json({ message: error.message });
-    }
   }
 });
 
